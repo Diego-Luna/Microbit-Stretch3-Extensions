@@ -87,6 +87,7 @@ class MicrobitSerial {
                 id: 'microbitSerial.name',
                 default: 'Micro:bit Serial'
             }),
+            menuIconURI: imgURI, // Your icon in base64
             blockIconURI: imgURI, // Your icon in base64
             blocks: [
                 {
