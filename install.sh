@@ -8,7 +8,7 @@ EXTENSION_NAME='Micro:bit Serial'
 EXTENSION_DESCRIPTION="Connect to Micro:bit and send data via Serial."
 
 # Instalar dependencias necesarias
-npm install --legacy-peer-deps
+# npm install --legacy-peer-deps
 
 # Crear directorios y copiar archivos de la extensión
 mkdir -p node_modules/scratch-vm/src/extensions/scratch3_${EXTENSION_ID}
