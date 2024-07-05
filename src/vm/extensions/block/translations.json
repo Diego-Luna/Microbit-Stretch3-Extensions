@@ -1,9 +1,0 @@
-{
-    "en": {
-      "microbitSerial.name": "Micro:bit Serial",
-      "microbitSerial.connect": "Connect to micro:bit",
-      "microbitSerial.disconnect": "Disconnect from micro:bit",
-      "microbitSerial.sendData": "Send [DATA] to micro:bit"
-    }
-  }
-  
