@@ -87,7 +87,6 @@ class MicrobitSerial {
                 id: 'microbitSerial.name',
                 default: 'Micro:bit Serial'
             }),
-            menuIconURI: imgURI, // Your icon in base64
             blockIconURI: imgURI, // Your icon in base64
             blocks: [
                 {
@@ -116,24 +115,19 @@ class MicrobitSerial {
                     arguments: {
                         DATA: {
                             type: ArgumentType.STRING,
-                            defaultValue: 'Hello micro:bit'
+                            defaultValue: formatMessage({
+                                id: 'microbitSerial.defaultData',
+                                default: 'Hello micro:bit'
+                            })
                         }
                     }
                 },
                 {
-                    opcode: 'receiveString',
+                    opcode: 'receiveData',
                     blockType: BlockType.REPORTER,
                     text: formatMessage({
-                        id: 'microbitSerial.receiveString',
-                        default: 'Receive string from micro:bit'
-                    })
-                },
-                {
-                    opcode: 'receiveNumber',
-                    blockType: BlockType.REPORTER,
-                    text: formatMessage({
-                        id: 'microbitSerial.receiveNumber',
-                        default: 'Receive number from micro:bit'
+                        id: 'microbitSerial.receiveData',
+                        default: 'Receive data from micro:bit'
                     })
                 }
             ],
@@ -144,16 +138,16 @@ class MicrobitSerial {
                     'microbitSerial.connect': 'Conectar a la micro:bit',
                     'microbitSerial.disconnect': 'Desconectar de la micro:bit',
                     'microbitSerial.sendData': 'Enviar [DATA] a la micro:bit',
-                    'microbitSerial.receiveString': 'Recibir cadena de la micro:bit',
-                    'microbitSerial.receiveNumber': 'Recibir número de la micro:bit'
+                    'microbitSerial.receiveData': 'Recibir datos de la micro:bit',
+                    'microbitSerial.defaultData': 'Hola micro:bit'
                 },
                 'en': {
                     'microbitSerial.name': 'Micro:bit Serial',
                     'microbitSerial.connect': 'Connect to micro:bit',
                     'microbitSerial.disconnect': 'Disconnect from micro:bit',
                     'microbitSerial.sendData': 'Send [DATA] to micro:bit',
-                    'microbitSerial.receiveString': 'Receive string from micro:bit',
-                    'microbitSerial.receiveNumber': 'Receive number from micro:bit'
+                    'microbitSerial.receiveData': 'Receive data from micro:bit',
+                    'microbitSerial.defaultData': 'Hello micro:bit'
                 }
             }
         };
@@ -161,9 +155,8 @@ class MicrobitSerial {
 
     connect() {
         if (!isConnected) {
-            alert('Please connect your micro:bit using a USB cable.');
+            connect();
         }
-        connect();
     }
 
     disconnect() {
@@ -174,14 +167,9 @@ class MicrobitSerial {
         sendData(args.DATA);
     }
 
-    async receiveString() {
+    async receiveData() {
         const data = await receiveData();
         return data ? data.toString() : '';
-    }
-
-    async receiveNumber() {
-        const data = await receiveData();
-        return data ? parseFloat(data) : 0;
     }
 }
 
