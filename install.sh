@@ -4,7 +4,7 @@ LF=$(printf '\\\012_')
 LF=${LF%_}
 EXTENSION_ID=microbitSerial
 COLLABORATOR=MoonMakers
-EXTENSION_NAME='Microbit Serial'
+EXTENSION_NAME='micro:bit Serial'
 EXTENSION_DESCRIPTION="Extensión de MoonMakers para conectar la micro:bit a la computadora."
 
 npm install
