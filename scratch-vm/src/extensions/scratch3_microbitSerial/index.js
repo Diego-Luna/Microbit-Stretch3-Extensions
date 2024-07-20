@@ -167,7 +167,7 @@ async function trainConvolutionalModel() {
 async function predict() {
     if (!model || !model.layers) {
         alert('Modelo no cargado o entrenado.');
-        return;
+        return '';
     }
 
     let data = await readDataFromMicrobit();
@@ -190,13 +190,15 @@ async function predict() {
         reshapedData = tf.tensor(data).reshape([1, inputSize, channels]);
     } else {
         alert('Modelo no soportado.');
-        return;
+        return '';
     }
 
     const prediction = model.predict(reshapedData);
     const predictedClass = prediction.argMax(-1).dataSync()[0];
     console.log(`Predicción: ${classNames[predictedClass]}`);
+    return classNames[predictedClass];
 }
+
 
 async function downloadModel() {
     if (model) {
@@ -316,7 +318,7 @@ class MicrobitSerial {
                     opcode: 'predict',
                     blockType: BlockType.REPORTER,
                     text: 'Predict'
-                },
+                },                
                 {
                     opcode: 'downloadModel',
                     blockType: BlockType.COMMAND,
