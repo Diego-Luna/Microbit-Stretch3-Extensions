@@ -14,6 +14,9 @@ let classNames = [];
 let dataByClass = [];
 let model;
 
+let predictionValue = '';
+let sampleCount = 0;
+
 async function connect() {
     if (!('serial' in navigator)) {
         alert('Tu navegador no soporta la API Web Serial');
@@ -195,6 +198,7 @@ async function predict() {
 
     const prediction = model.predict(reshapedData);
     const predictedClass = prediction.argMax(-1).dataSync()[0];
+    predictionValue = classNames[predictedClass];
     console.log(`Predicción: ${classNames[predictedClass]}`);
     return classNames[predictedClass];
 }
@@ -328,6 +332,16 @@ class MicrobitSerial {
                     opcode: 'loadModel',
                     blockType: BlockType.COMMAND,
                     text: 'Load Model'
+                },
+                {
+                    opcode: 'getSampleCount',
+                    blockType: BlockType.REPORTER,
+                    text: 'Sample count'
+                },
+                {
+                    opcode: 'getPredictionValue',
+                    blockType: BlockType.REPORTER,
+                    text: 'Prediction value'
                 }
             ],
             menus: {
@@ -346,14 +360,18 @@ class MicrobitSerial {
                     'microbitSerial.connect': 'Conectar a la micro:bit',
                     'microbitSerial.sendData': 'Enviar [DATA] a la micro:bit',
                     'microbitSerial.receiveData': 'Recibir datos de la micro:bit',
-                    'microbitSerial.defaultData': 'Hola micro:bit'
+                    'microbitSerial.defaultData': 'Hola micro:bit',
+                    'microbitSerial.getSampleCount': 'Número de muestras',
+                    'microbitSerial.getPredictionValue': 'Valor de predicción'
                 },
                 'en': {
                     'microbitSerial.name': 'Micro:bit Serial',
                     'microbitSerial.connect': 'Connect to micro:bit',
                     'microbitSerial.sendData': 'Send [DATA] to micro:bit',
                     'microbitSerial.receiveData': 'Receive data from micro:bit',
-                    'microbitSerial.defaultData': 'Hello micro:bit'
+                    'microbitSerial.defaultData': 'Hello micro:bit',
+                    'microbitSerial.getSampleCount': 'Sample count',
+                    'microbitSerial.getPredictionValue': 'Prediction value'
                 }
             }
         };
@@ -367,8 +385,9 @@ class MicrobitSerial {
 
     setClassCount(args) {
         const classCount = parseInt(args.CLASS_COUNT);
-        classNames = Array(classCount).fill('');
+        classNames = Array.from({ length: classCount }, (_, i) => `Class ${i + 1}`);
         dataByClass = Array(classCount).fill().map(() => []);
+        sampleCount = 0; // Reset sample count
     }
 
     setClassName(args) {
@@ -384,6 +403,7 @@ class MicrobitSerial {
         if (classIndex >= 0 && classIndex < classNames.length) {
             const data = await readDataFromMicrobit();
             dataByClass[classIndex].push(data);
+            sampleCount++; // Increment sample count
             console.log(`Agregada muestra para la clase ${classNames[classIndex]}:`, dataByClass[classIndex]);
         }
     }
@@ -422,6 +442,14 @@ class MicrobitSerial {
             return [{ text: 'Class 1', value: '1' }];
         }
         return classNames.map((name, index) => ({ text: name || `Class ${index + 1}`, value: `${index + 1}` }));
+    }
+
+    getSampleCount() {
+        return sampleCount;
+    }
+
+    getPredictionValue() {
+        return predictionValue;
     }
 }
 
