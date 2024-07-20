@@ -341,6 +341,11 @@ class MicrobitSerial {
                             menu: 'classIndexMenu'
                         }
                     }
+                },
+                {
+                    opcode: 'uploadModelFiles',
+                    blockType: BlockType.COMMAND,
+                    text: 'Upload Model Files'
                 }
             ],
             menus: {
@@ -384,8 +389,8 @@ class MicrobitSerial {
         const classCount = parseInt(args.CLASS_COUNT);
         classNames = Array.from({ length: classCount }, (_, i) => `Class ${i + 1}`);
         dataByClass = Array(classCount).fill().map(() => []);
-        sampleCount = {}; // Reset sample count
-        classNames.forEach((_, index) => sampleCount[index + 1] = 0); // Initialize sample count for each class
+        sampleCount = {};
+        classNames.forEach((_, index) => sampleCount[index + 1] = 0);
     }
 
     setClassName(args) {
@@ -401,7 +406,7 @@ class MicrobitSerial {
         if (classIndex >= 0 && classIndex < classNames.length) {
             const data = await readDataFromMicrobit();
             dataByClass[classIndex].push(data);
-            sampleCount[classIndex + 1]++; // Increment sample count for the specific class
+            sampleCount[classIndex + 1]++;
             console.log(`Agregada muestra para la clase ${classNames[classIndex]}:`, dataByClass[classIndex]);
         }
     }
@@ -428,7 +433,7 @@ class MicrobitSerial {
         downloadModel();
     }
 
-    loadModel(args) {
+    uploadModelFiles() {
         const jsonInput = document.getElementById('json-input').files[0];
         const binInput = document.getElementById('bin-input').files[0];
         const classNamesInput = document.getElementById('classNames-input').files[0];
