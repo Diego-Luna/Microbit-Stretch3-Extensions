@@ -31,7 +31,7 @@ async function connect() {
         writer = textEncoder.writable.getWriter();
 
         const textDecoder = new TextDecoderStream();
-        const readableStreamClosed = port.readable.pipeTo(textDecoder.writable);
+        const readableStreamClosed = textDecoder.readable.pipeTo(port.readable);
         reader = textDecoder.readable.getReader();
 
         isConnected = true;
@@ -319,7 +319,7 @@ class MicrobitSerial {
                     opcode: 'predict',
                     blockType: BlockType.REPORTER,
                     text: 'Predict'
-                },                
+                },
                 {
                     opcode: 'downloadModel',
                     blockType: BlockType.COMMAND,
