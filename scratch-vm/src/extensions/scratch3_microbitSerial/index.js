@@ -31,7 +31,7 @@ async function connect() {
         writer = textEncoder.writable.getWriter();
 
         const textDecoder = new TextDecoderStream();
-        const readableStreamClosed = textDecoder.readable.pipeTo(port.readable);
+        const readableStreamClosed = port.readable.pipeTo(textDecoder.writable);
         reader = textDecoder.readable.getReader();
 
         isConnected = true;
@@ -234,8 +234,8 @@ class MicrobitSerial {
                 id: 'microbitSerial.name',
                 default: 'Micro:bit Serial'
             }),
-            menuIconURI: imgMenu, // Your icon in base64
-            blockIconURI: imgBLOC, // Your icon in base64
+            menuIconURI: null,
+            blockIconURI: null,
             blocks: [
                 {
                     opcode: 'connect',
@@ -260,7 +260,7 @@ class MicrobitSerial {
                 {
                     opcode: 'setClassName',
                     blockType: BlockType.COMMAND,
-                    text: 'Set class [CLASS_INDEX] name to [CLASS_NAME]',
+                    text: 'Set name for class [CLASS_INDEX] to [CLASS_NAME]',
                     arguments: {
                         CLASS_INDEX: {
                             type: ArgumentType.NUMBER,
