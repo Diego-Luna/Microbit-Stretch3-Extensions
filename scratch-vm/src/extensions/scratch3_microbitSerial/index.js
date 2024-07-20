@@ -31,7 +31,7 @@ async function connect() {
         writer = textEncoder.writable.getWriter();
 
         const textDecoder = new TextDecoderStream();
-        const readableStreamClosed = port.readable.pipeTo(textDecoder.writable);
+        const readableStreamClosed = textDecoder.readable.pipeTo(textDecoder.writable);
         reader = textDecoder.readable.getReader();
 
         isConnected = true;
@@ -226,6 +226,16 @@ async function loadModel(jsonFile, binFile, classNamesFile) {
     console.log('Modelo y nombres de clases cargados.');
 }
 
+function showModal() {
+    const modal = document.getElementById('modelModal');
+    modal.style.display = 'block';
+}
+
+function hideModal() {
+    const modal = document.getElementById('modelModal');
+    modal.style.display = 'none';
+}
+
 class MicrobitSerial {
     getInfo() {
         return {
@@ -234,8 +244,8 @@ class MicrobitSerial {
                 id: 'microbitSerial.name',
                 default: 'Micro:bit Serial'
             }),
-            menuIconURI: null,
-            blockIconURI: null,
+            menuIconURI: imgBLOC,
+            blockIconURI: imgMenu,
             blocks: [
                 {
                     opcode: 'connect',
@@ -286,31 +296,6 @@ class MicrobitSerial {
                     }
                 },
                 {
-                    opcode: 'sendData',
-                    blockType: BlockType.COMMAND,
-                    text: formatMessage({
-                        id: 'microbitSerial.sendData',
-                        default: 'Send [DATA] to micro:bit'
-                    }),
-                    arguments: {
-                        DATA: {
-                            type: ArgumentType.STRING,
-                            defaultValue: formatMessage({
-                                id: 'microbitSerial.defaultData',
-                                default: 'Hello micro:bit'
-                            })
-                        }
-                    }
-                },
-                {
-                    opcode: 'receiveData',
-                    blockType: BlockType.REPORTER,
-                    text: formatMessage({
-                        id: 'microbitSerial.receiveData',
-                        default: 'Receive data from micro:bit'
-                    })
-                },
-                {
                     opcode: 'trainConvolutionalModel',
                     blockType: BlockType.COMMAND,
                     text: 'Train Convolutional Model'
@@ -326,9 +311,9 @@ class MicrobitSerial {
                     text: 'Download Model'
                 },
                 {
-                    opcode: 'loadModel',
+                    opcode: 'showModal',
                     blockType: BlockType.COMMAND,
-                    text: 'Load Model'
+                    text: 'Upload Model'
                 },
                 {
                     opcode: 'getSampleCount',
@@ -341,11 +326,6 @@ class MicrobitSerial {
                             menu: 'classIndexMenu'
                         }
                     }
-                },
-                {
-                    opcode: 'uploadModelFiles',
-                    blockType: BlockType.COMMAND,
-                    text: 'Upload Model Files'
                 }
             ],
             menus: {
@@ -411,15 +391,6 @@ class MicrobitSerial {
         }
     }
 
-    sendData(args) {
-        sendData(args.DATA);
-    }
-
-    async receiveData() {
-        const data = await receiveData();
-        return data ? data.toString() : '';
-    }
-
     async trainConvolutionalModel() {
         await trainConvolutionalModel();
     }
@@ -433,11 +404,8 @@ class MicrobitSerial {
         downloadModel();
     }
 
-    uploadModelFiles() {
-        const jsonInput = document.getElementById('json-input').files[0];
-        const binInput = document.getElementById('bin-input').files[0];
-        const classNamesInput = document.getElementById('classNames-input').files[0];
-        loadModel(jsonInput, binInput, classNamesInput);
+    showModal() {
+        showModal();
     }
 
     getClassNames() {
