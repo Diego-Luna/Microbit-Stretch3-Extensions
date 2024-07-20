@@ -22,7 +22,7 @@ async function connect() {
 
     try {
         port = await navigator.serial.requestPort();
-        await port.open({ baudRate: 115200 });
+        await port.open({ baudRate: 9600 });
 
         const textEncoder = new TextEncoderStream();
         const writableStreamClosed = textEncoder.readable.pipeTo(port.writable);
