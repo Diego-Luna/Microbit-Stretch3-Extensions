@@ -501,6 +501,7 @@ class MicrobitSerial {
 module.exports = MicrobitSerial;
 
 
+
 // --> Codigo microbit
 
 // from microbit import *
