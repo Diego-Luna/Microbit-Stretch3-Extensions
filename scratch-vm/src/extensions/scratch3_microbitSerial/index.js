@@ -252,19 +252,31 @@ class MicrobitSerial {
     getInfo() {
         return {
             id: 'microbitSerial',
-            name: 'Micro:bit Serial',
+            name: formatMessage({
+                id: 'microbitSerial.name',
+                default: 'Micro:bit Serial',
+                description: 'Micro:bit Serial'
+            }),
             menuIconURI: imgMenu,
             blockIconURI: imgBLOC,
             blocks: [
                 {
                     opcode: 'connect',
                     blockType: BlockType.COMMAND,
-                    text: 'Connect to micro:bit'
+                    text: formatMessage({
+                        id: 'microbitSerial.connect',
+                        default: 'Connect to micro:bit',
+                        description: 'Connect to micro:bit'
+                    })
                 },
                 {
                     opcode: 'setClassCount',
                     blockType: BlockType.COMMAND,
-                    text: 'Set number of classes [CLASS_COUNT]',
+                    text: formatMessage({
+                        id: 'microbitSerial.setClassCount',
+                        default: 'Set number of classes [CLASS_COUNT]',
+                        description: 'Set number of classes'
+                    }),
                     arguments: {
                         CLASS_COUNT: {
                             type: ArgumentType.NUMBER,
@@ -276,7 +288,11 @@ class MicrobitSerial {
                 {
                     opcode: 'setClassName',
                     blockType: BlockType.COMMAND,
-                    text: 'Set name of class [CLASS_INDEX] to [CLASS_NAME]',
+                    text: formatMessage({
+                        id: 'microbitSerial.setClassName',
+                        default: 'Set name of class [CLASS_INDEX] to [CLASS_NAME]',
+                        description: 'Set name of class'
+                    }),
                     arguments: {
                         CLASS_INDEX: {
                             type: ArgumentType.NUMBER,
@@ -292,7 +308,11 @@ class MicrobitSerial {
                 {
                     opcode: 'collectDataForClass',
                     blockType: BlockType.COMMAND,
-                    text: 'Collect data for class [CLASS_INDEX]',
+                    text: formatMessage({
+                        id: 'microbitSerial.collectDataForClass',
+                        default: 'Collect data for class [CLASS_INDEX]',
+                        description: 'Collect data for class'
+                    }),
                     arguments: {
                         CLASS_INDEX: {
                             type: ArgumentType.NUMBER,
@@ -304,7 +324,11 @@ class MicrobitSerial {
                 {
                     opcode: 'setTimeToken',
                     blockType: BlockType.COMMAND,
-                    text: 'Set time per sample to [TIME_TOKEN] seconds',
+                    text: formatMessage({
+                        id: 'microbitSerial.setTimeToken',
+                        default: 'Set time per sample to [TIME_TOKEN] seconds',
+                        description: 'Set time per sample'
+                    }),
                     arguments: {
                         TIME_TOKEN: {
                             type: ArgumentType.NUMBER,
@@ -315,7 +339,11 @@ class MicrobitSerial {
                 {
                     opcode: 'trainConvolutionalModel',
                     blockType: BlockType.COMMAND,
-                    text: 'Train model of AI with [EPOCHS] epochs',
+                    text: formatMessage({
+                        id: 'microbitSerial.trainConvolutionalModel',
+                        default: 'Train model of AI with [EPOCHS] epochs',
+                        description: 'Train model of AI'
+                    }),
                     arguments: {
                         EPOCHS: {
                             type: ArgumentType.NUMBER,
@@ -324,44 +352,31 @@ class MicrobitSerial {
                     }
                 },
                 {
-                    opcode: 'sendData',
-                    blockType: BlockType.COMMAND,
-                    text: formatMessage({
-                        id: 'microbitSerial.sendData',
-                        default: 'Send [DATA] to micro:bit'
-                    }),
-                    arguments: {
-                        DATA: {
-                            type: ArgumentType.STRING,
-                            defaultValue: formatMessage({
-                                id: 'microbitSerial.defaultData',
-                                default: 'Hello micro:bit'
-                            })
-                        }
-                    }
-                },
-                {
-                    opcode: 'receiveData',
-                    blockType: BlockType.REPORTER,
-                    text: formatMessage({
-                        id: 'microbitSerial.receiveData',
-                        default: 'Receive data from micro:bit'
-                    })
-                },
-                {
                     opcode: 'predict',
                     blockType: BlockType.REPORTER,
-                    text: 'Predict'
+                    text: formatMessage({
+                        id: 'microbitSerial.predict',
+                        default: 'Predict',
+                        description: 'Predict'
+                    })
                 },
                 {
                     opcode: 'downloadModel',
                     blockType: BlockType.COMMAND,
-                    text: 'Download Model'
+                    text: formatMessage({
+                        id: 'microbitSerial.downloadModel',
+                        default: 'Download Model',
+                        description: 'Download Model'
+                    })
                 },
                 {
                     opcode: 'loadModel',
                     blockType: BlockType.COMMAND,
-                    text: 'Load Model from Links [CLASS_NAMES_LINK] [MODEL_JSON_LINK] [MODEL_BIN_LINK]',
+                    text: formatMessage({
+                        id: 'microbitSerial.loadModel',
+                        default: 'Load Model from Links [CLASS_NAMES_LINK] [MODEL_JSON_LINK] [MODEL_BIN_LINK]',
+                        description: 'Load Model from Links'
+                    }),
                     arguments: {
                         CLASS_NAMES_LINK: {
                             type: ArgumentType.STRING,
@@ -380,7 +395,11 @@ class MicrobitSerial {
                 {
                     opcode: 'getSampleCount',
                     blockType: BlockType.REPORTER,
-                    text: 'Sample count for class [CLASS_INDEX]',
+                    text: formatMessage({
+                        id: 'microbitSerial.getSampleCount',
+                        default: 'Sample count for class [CLASS_INDEX]',
+                        description: 'Sample count for class'
+                    }),
                     arguments: {
                         CLASS_INDEX: {
                             type: ArgumentType.NUMBER,
@@ -486,10 +505,7 @@ class MicrobitSerial {
     }
 
     getClassNames() {
-        if (classNames.length === 0) {
-            return [{ text: 'Class 1', value: '1' }];
-        }
-        return classNames.map((name, index) => ({ text: name || `Class ${index + 1}`, value: `${index + 1}` }));
+        return classNames.map((name, index) => ({ text: `Class ${index + 1}`, value: `${index + 1}` }));
     }
 
     getSampleCount(args) {
@@ -499,6 +515,7 @@ class MicrobitSerial {
 }
 
 module.exports = MicrobitSerial;
+
 
 
 
