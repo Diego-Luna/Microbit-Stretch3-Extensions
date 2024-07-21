@@ -100,7 +100,7 @@ async function readDataFromMicrobit() {
             lineBuffer += value;
             let newlineIndex;
             while ((newlineIndex = lineBuffer.indexOf('\n')) >= 0) {
-                const line = lineBuffer.substring(0, newlineIndex + 1);
+                let line = lineBuffer.substring(0, newlineIndex + 1);
                 lineBuffer = lineBuffer.substring(newlineIndex + 1);
 
                 console.log(line.trim() + " DD");
