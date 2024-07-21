@@ -464,6 +464,22 @@ class MicrobitSerial {
                     'microbitSerial.getSampleCount': 'Número de muestras por clase [CLASS_INDEX]',
                     'microbitSerial.defaultData': 'Hola micro:bit'
                 },
+                'es-419': {
+                    'microbitSerial.name': 'Micro:bit Serial',
+                    'microbitSerial.connect': 'Conectar a la micro:bit',
+                    'microbitSerial.setClassCount': 'Establecer número de clases [CLASS_COUNT]',
+                    'microbitSerial.setClassName': 'Establecer nombre de la clase [CLASS_INDEX] a [CLASS_NAME]',
+                    'microbitSerial.collectDataForClass': 'Recopilar datos para la clase [CLASS_INDEX]',
+                    'microbitSerial.setTimeToken': 'Establecer tiempo por muestra en [TIME_TOKEN] segundos',
+                    'microbitSerial.trainConvolutionalModel': 'Entrenar modelo de IA con [EPOCHS] épocas',
+                    'microbitSerial.sendData': 'Enviar [DATA] a la micro:bit',
+                    'microbitSerial.receiveData': 'Recibir datos de la micro:bit',
+                    'microbitSerial.predict': 'Predecir',
+                    'microbitSerial.downloadModel': 'Descargar Modelo',
+                    'microbitSerial.loadModel': 'Cargar Modelo desde enlaces [CLASS_NAMES_LINK] [MODEL_JSON_LINK] [MODEL_BIN_LINK]',
+                    'microbitSerial.getSampleCount': 'Número de muestras por clase [CLASS_INDEX]',
+                    'microbitSerial.defaultData': 'Hola micro:bit'
+                },
                 'en': {
                     'microbitSerial.name': 'Micro:bit Serial',
                     'microbitSerial.connect': 'Connect to micro:bit',
@@ -565,6 +581,7 @@ class MicrobitSerial {
 }
 
 module.exports = MicrobitSerial;
+
 
 
 
