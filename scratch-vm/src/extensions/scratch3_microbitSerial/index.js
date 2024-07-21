@@ -103,8 +103,9 @@ async function readDataFromMicrobit() {
                 const line = lineBuffer.substring(0, newlineIndex + 1);
                 lineBuffer = lineBuffer.substring(newlineIndex + 1);
 
-                if (line !== "system:off\n" && line.split("-") && line.split("-")[0] === "system") {
-                    console.log(line.trim());
+                console.log(line.trim() + " DD");
+                if (line !== "system:off\n" && line.split("-").length >= 1  && line.split("-")[0] === "system") {
+                    console.log("line:", line.split("-"));
                     line = line.split("-")[1];
                     const pinValues = line.trim().split(',').map(pin => parseFloat(pin.split(':')[1]));
                     console.log(pinValues);
